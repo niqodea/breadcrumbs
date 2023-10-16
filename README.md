@@ -1,4 +1,5 @@
 # Breadcrumbs: Intuitive Symlink Navigation Philosophy
+<img align="right" src="assets/logo.svg" width="200" align="right" alt="Breadcrumbs Logo">
 
 > *Making symlinks intuitive and maintainable.*
 
