@@ -1,0 +1,1 @@
+../../submodule1/sub1/file1.txt
