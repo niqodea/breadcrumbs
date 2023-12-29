@@ -31,7 +31,7 @@ if [ ! -d $target_path ]; then
 fi
 
 if [ -z $name ]; then
-    name=$(basename $source_path)
+    name=$(basename $(realpath $source_path))
 fi
 
 symlink_name=.$name.bc
