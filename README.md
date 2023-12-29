@@ -1,11 +1,13 @@
-# Breadcrumbs: Intuitive Symlink Navigation Philosophy
+# Breadcrumbs
 <img align="right" src="assets/logo.svg" width="200" align="right" alt="Breadcrumbs Logo">
 
 > *Making symlinks intuitive and maintainable.*
 
-Breadcrumbs is more than just a script — it embodies a philosophy aimed at simplifying "upward" navigations in directory hierarchies. By replacing the often confusing `../` sequences in symlinks with clearer "breadcrumbs" markers, we offer a straightforward approach to understanding and managing links.
+Breadcrumbs offers a simpler way to move up in directory hierarchies by using symbolic links with easy-to-understand "breadcrumbs" markers. This replaces the confusing `../` sequences, making it easier to track and manage paths.
 
-## Rationale
+The repository also includes a ready-to-use script that showcases how this method works in practice.
+
+## Concept
 
 ### Traditional Approach
 Consider the following directory structure:
@@ -71,7 +73,9 @@ ln -s .project.bc/module1/sub1/file1.txt
 - **Robustness**: When a significant structural change occurs, the breadcrumb symlink explicitly fails, preventing unintended file references.
 - **Documentation**: The presence of breadcrumbs highlights inter-module file references, offering clear insights into file dependencies.
 
-## Installation
+## Script
+
+### Installation
 
 Clone the repository, then `cp` the `breadcrumbs` script in the `bin` directory.
 
@@ -86,7 +90,7 @@ Clone the repository, then `cp` the `breadcrumbs` script in the `bin` directory.
    cp breadcrumbs ~/.local/bin
    ```
 
-## Usage
+### Usage
 
 The script's usage is as follows:
 
