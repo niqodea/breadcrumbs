@@ -5,57 +5,56 @@ set -eu
 usage="Usage: $0 [-n name] [-s /path/to/source] [-t /path/to/target]"
 
 # Default option values
-name=""
-source_path=$PWD
-target_path=$PWD
+name=
+source_path="$PWD"
+target_path="$PWD"
 
 while getopts "n:s:t:dr" opt; do
-    case $opt in
-        n) name=$OPTARG;;
-        s) source_path=$OPTARG;;
-        t) target_path=$OPTARG;;
+    case "$opt" in
+        n) name="$OPTARG";;
+        s) source_path="$OPTARG";;
+        t) target_path="$OPTARG";;
         *) >&2 echo "$usage"; exit 1;;
     esac
 done
 
-shift $((OPTIND-1))
-if [ $# -gt 0 ]; then echo "$usage"; exit 1; fi
+shift "$((OPTIND-1))"
+if [ "$#" -gt 0 ]; then echo "$usage"; exit 1; fi
 
-if [ ! -d $source_path ]; then
+if [ ! -d "$source_path" ]; then
     >&2 echo "Source path does not exist: $source_path"
     exit 1
 fi
-if [ ! -d $target_path ]; then
+if [ ! -d "$target_path" ]; then
     >&2 echo "Target path does not exist: $target_path"
     exit 1
 fi
 
-if [ -z $name ]; then
-    name=$(basename $(realpath $source_path))
+if [ -z "$name" ]; then
+    name="$(basename $(realpath "$source_path"))"
 fi
 
-symlink_name=.$name.bc
+symlink_name=".$name.bc"
 
-relative_path=$(realpath --relative-to=$source_path $target_path)
-if [[ "$relative_path" = ../* ]]; then
-    >&2 echo "Target path is not a descendant of source path"
+relative_path="$(realpath --relative-to="$source_path" "$target_path")"
+if [[ "$relative_path" = '../'* ]]; then
+    >&2 echo 'Target path is not a descendant of source path'
     exit 1
 fi
 
-if [ ! -e $source_path/$symlink_name ]; then
-    ln --symbolic . $source_path/$symlink_name
+if [ ! -e "$source_path/$symlink_name" ]; then
+    ln --symbolic . "$source_path/$symlink_name"
 fi
 
-if [ "$relative_path" == "." ]; then
+if [ "$relative_path" == '.' ]; then
     exit 0
 fi
 
-current_path=$source_path
+current_path="$source_path"
 IFS='/' read -ra dirs <<< "$relative_path"
 for dir in "${dirs[@]}"; do
-    if [ ! -e $current_path/$dir/$symlink_name ]; then
-        ln --symbolic ../$symlink_name $current_path/$dir/$symlink_name
+    if [ ! -e "$current_path/$dir/$symlink_name" ]; then
+        ln --symbolic "../$symlink_name" "$current_path/$dir/$symlink_name"
     fi
-    current_path=$current_path/$dir
+    current_path="$current_path/$dir"
 done
-
