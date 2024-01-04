@@ -119,5 +119,3 @@ To delete breadcrumb symlinks, run:
 rm **/.my-breadcrumb.bc
 ```
 Execute this from the root breadcrumb directory or any relevant subdirectory.
-
-**Note**: Linux distributions often limit symlink redirection to about 20. For deep directory trails, be aware of this constraint.
