@@ -1,11 +1,9 @@
 # Breadcrumbs
 <img align="right" src="assets/logo.svg" width="200" align="right" alt="Breadcrumbs Logo">
 
-> *Making symlinks intuitive and maintainable.*
+> *Making upward navigation in symlinks intuitive and maintainable.*
 
-Breadcrumbs offers a simpler way to move up in directory hierarchies by using symbolic links with easy-to-understand "breadcrumbs" markers. This replaces the confusing `../` sequences, making it easier to track and manage paths.
-
-The repository also includes a ready-to-use script that showcases how this method works in practice.
+Breadcrumbs offer a simpler way to move up in directory hierarchies by using symbolic links with easy-to-understand "breadcrumbs" markers. This replaces the confusing `../` sequences, making it easier to track and manage paths.
 
 ## Concept
 
@@ -42,7 +40,7 @@ Using Breadcrumbs, the "upward" path from `sub2` to the `project` directory beco
 2. **Progression**: As we traverse towards `sub2`, at each step, another breadcrumb symlink `.project.bc` is created pointing to the parent directory's breadcrumb (`../.project.bc`).
 3. **End Result**: By the time we reach `sub2`, we've established a trail of breadcrumb symlinks, guiding us from `sub2` back to the `project` directory seamlessly.
 
-After executing breadcrumbs for the given example:
+After setting up breadcrumbs for the given example, we get the following:
 
 ```
 project/
@@ -61,7 +59,7 @@ project/
 └─── .project.bc -> .
 ```
 
-Then, to create a symlink inside `sub2` to `file1.txt`, execute:
+Then, to create a symlink inside `sub2` to `file1.txt`, just run:
 
 ```sh
 ln -s .project.bc/module1/sub1/file1.txt
@@ -74,6 +72,8 @@ ln -s .project.bc/module1/sub1/file1.txt
 - **Documentation**: The presence of breadcrumbs highlights inter-module file references, offering clear insights into file dependencies.
 
 ## Script
+
+The repository also includes a ready-to-use script that showcases how this method works in practice.
 
 ### Installation
 
@@ -118,4 +118,4 @@ To delete breadcrumb symlinks, run:
 ```
 rm **/.my-breadcrumb.bc
 ```
-Execute this from the root breadcrumb directory or any relevant subdirectory.
+Execute this from the root breadcrumb directory or any subdirectory you want to clean up.
