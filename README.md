@@ -74,3 +74,39 @@ ln -s .project.bc/module1/sub1/file1.txt
 ## Script
 
 The repository also includes a ready-to-use script that showcases how this method works in practice.
+
+### Installation
+
+Download the tarball and extract:
+
+```
+wget https://github.com/niqodea/breadcrumbs/releases/download/v0.1.0/breadcrumbs-v0.1.0-x86_64-unknown-linux-gnu.tar.gz
+tar -xzf breadcrumbs-v0.1.0-x86_64-unknown-linux-gnu.tar.gz
+```
+
+then `cp` the `breadcrumbs` binary in the `bin` directory.
+
+1. **Global Installation**:
+   ```
+   sudo cp breadcrumbs /usr/bin
+   ```
+
+2. **Local Installation**:
+   First, ensure `~/.local/bin` is in your `PATH`. Then:
+   ```
+   cp breadcrumbs ~/.local/bin
+   ```
+
+### Usage
+
+Refer to the command's help message:
+
+```
+breadcrumbs --help
+```
+
+For example, to create a trail of breadcrumbs from the current directory to the one two levels above, run:
+
+```
+breadcrumbs trail ../..
+```
