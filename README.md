@@ -33,11 +33,11 @@ ln -s ../../module1/sub1/file1.txt
 - **Brittleness**: Modifying the directory structure can not only break links, but may also unintentionally reference existing files, leading to unpredictable issues.
 
 ### Breadcrumbs Approach
-Using Breadcrumbs, the "upward" path from `sub2` to the `project` directory becomes more intuitive, such as `.project.bc/module1/sub1/file1.txt`.
+Using Breadcrumbs, the "upward" path from `sub2` to the `project` directory becomes more intuitive, such as `..project/module1/sub1/file1.txt`.
 
 **How It Works**:
-1. **Initialization**: A breadcrumb symlink named `.project.bc` is created inside the `project` directory, pointing to the `project` directory itself (`.`).
-2. **Progression**: As we traverse towards `sub2`, at each step, another breadcrumb symlink `.project.bc` is created pointing to the parent directory's breadcrumb (`../.project.bc`).
+1. **Initialization**: A breadcrumb symlink named `..project` is created inside the `project` directory, pointing to the `project` directory itself (`.`).
+2. **Progression**: As we traverse towards `sub2`, at each step, another breadcrumb symlink `..project` is created pointing to the parent directory's breadcrumb (`../..project`).
 3. **End Result**: By the time we reach `sub2`, we've established a trail of breadcrumb symlinks, guiding us from `sub2` back to the `project` directory seamlessly.
 
 After setting up breadcrumbs for the given example, we get the following:
@@ -52,21 +52,21 @@ project/
 ├─── module2
 │    │
 │    ├─── sub2/
-│    │    └─── .project.bc -> ../.project.bc
+│    │    └─── ..project -> ../..project
 │    │
-│    └─── .project.bc -> ../.project.bc
+│    └─── ..project -> ../..project
 │
-└─── .project.bc -> .
+└─── ..project -> .
 ```
 
 Then, to create a symlink inside `sub2` to `file1.txt`, just run:
 
 ```sh
-ln -s .project.bc/module1/sub1/file1.txt
+ln -s ..project/module1/sub1/file1.txt
 ```
 
 **Benefits**:
-- **Clarity**: Instead of puzzling over multiple `../`, the `.project.bc/` breadcrumb explicitly indicates the journey up to the `project` directory.
+- **Clarity**: Instead of puzzling over multiple `../`, the `..project/` breadcrumb explicitly indicates the journey up to the `project` directory.
 - **Maintainability**: Breadcrumbs simplify symlink updates; adding or removing hierarchy levels often requires minimal to no breadcrumb adjustments.
 - **Robustness**: When a significant structural change occurs, the breadcrumb symlink explicitly fails, preventing unintended file references.
 - **Documentation**: The presence of breadcrumbs highlights inter-module file references, offering clear insights into file dependencies.
@@ -80,8 +80,8 @@ The repository also includes a ready-to-use script that showcases how this metho
 Download the tarball and extract:
 
 ```
-wget https://github.com/niqodea/breadcrumbs/releases/download/v0.1.0/breadcrumbs-v0.1.0-x86_64-unknown-linux-gnu.tar.gz
-tar -xzf breadcrumbs-v0.1.0-x86_64-unknown-linux-gnu.tar.gz
+wget https://github.com/niqodea/breadcrumbs/releases/download/v0.2.0/breadcrumbs-v0.2.0-x86_64-unknown-linux-gnu.tar.gz
+tar -xzf breadcrumbs-v0.2.0-x86_64-unknown-linux-gnu.tar.gz
 ```
 
 then `cp` the `breadcrumbs` binary in the `bin` directory.

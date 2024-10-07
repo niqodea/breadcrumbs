@@ -11,7 +11,7 @@ use walkdir::WalkDir;
 #[derive(Parser)]
 #[command(
     name = "breadcrumbs",
-    version = "0.1.0",
+    version = "0.2.0",
     about = "Manage breadcrumb symlinks"
 )]
 struct Args {
@@ -110,7 +110,7 @@ fn scatter(
         Some(name) => name,
         None => root_path.file_name().unwrap().to_str().unwrap().to_string(),
     };
-    let breadcrumb_name = format!(".{name}.bc");
+    let breadcrumb_name = format!("..{name}");
 
     let max_depth = max_depth.unwrap_or(usize::MAX);
 
@@ -163,7 +163,7 @@ fn trail(to: PathBuf, from: PathBuf, name: Option<String>) -> Result<String, Str
         Some(name) => name,
         None => to_path.file_name().unwrap().to_str().unwrap().to_string(),
     };
-    let breadcrumb_name = format!(".{name}.bc");
+    let breadcrumb_name = format!("..{name}");
 
     let trail_path = from_path.strip_prefix(&to_path).map_err(|_| {
         format!(
@@ -212,11 +212,11 @@ fn rename(breadcrumb: PathBuf, name: String) -> Result<String, String> {
         .unwrap()
         .to_string();
 
-    if !old_breadcrumb_name.starts_with('.') || !old_breadcrumb_name.ends_with(".bc") {
+    if !old_breadcrumb_name.starts_with("..") {
         return Err("not a breadcrumb".to_string());
     }
 
-    let new_breadcrumb_name = format!(".{name}.bc");
+    let new_breadcrumb_name = format!("..{name}");
 
     let root_path = breadcrumb
         .canonicalize()
@@ -264,7 +264,7 @@ fn vacuum(breadcrumb: PathBuf) -> Result<String, String> {
         .unwrap()
         .to_string();
 
-    if !breadcrumb_name.starts_with('.') || !breadcrumb_name.ends_with(".bc") {
+    if !breadcrumb_name.starts_with("..") {
         return Err("not a breadcrumb".to_string());
     }
 
